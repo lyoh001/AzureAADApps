@@ -123,11 +123,12 @@ print(df_rbac.shape)
 tables = pd.read_html(
     "https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles"
 )
-tables[0].rename({"ID": "roleDefinitionId"}, axis=1, inplace=True)
 display(tables[0].head())
 print(tables[0].shape)
 #%%
-df = pd.merge(df_rbac, tables[0], on="roleDefinitionId")
+df = pd.merge(
+    left=df_rbac, right=tables[0], left_on="roleDefinitionId", right_on="ID", how="left"
+)
 display(df.head())
 print(df.shape)
 #%%
